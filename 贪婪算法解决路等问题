@@ -1,0 +1,57 @@
+/****
+牛客网地址：https://www.nowcoder.com/practice/3a3577b9d3294fb7845b96a9cd2e099c?tpId=98&tqId=32826&rp=1&ru=/ta/2019test&qru=/ta/2019test/question-ranking
+题目描述：
+小Q正在给一条长度为n的道路设计路灯安置方案。
+为了让问题更简单,小Q把道路视为n个方格,需要照亮的地方用'.'表示, 不需要照亮的障碍物格子用'X'表示。
+小Q现在要在道路上设置一些路灯, 对于安置在pos位置的路灯, 这盏路灯可以照亮pos - 1, pos, pos + 1这三个位置。
+小Q希望能安置尽量少的路灯照亮所有'.'区域, 希望你能帮他计算一下最少需要多少盏路灯。
+输入的第一行包含一个正整数t(1 <= t <= 1000), 表示测试用例数
+接下来每两行一个测试数据, 第一行一个正整数n(1 <= n <= 1000),表示道路的长度。
+第二行一个字符串s表示道路的构造,只包含'.'和'X'。
+输入：2
+3
+.X.
+11
+...XX....XX
+预计输出：1
+3
+****/
+////
+学习笔记：首先这道题，是一个标准的加油站问题，也是贪婪算法的简单应用。
+算法大致思路：如果此时的指针位置需要路灯，为了优化减少路灯应用，我们就可以在下一个位置（i+1）建造路灯，这样当前位置i,i+1,i+2都可以应用到，省去了后面的麻烦。
+同时如果当前位置需要一盏灯，我们可以直接将路灯总数+1，并把指针向后移动三位i+3.原因就是i->i+2都已经有灯了，无论下一个i+1是否需要。
+tips:如果我们需要对一个字符串like：“Burberry”，逐个字符进行操作，可以调用string.toCharArray()方法，然后进行判断操作。
+
+////
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+public class Main {
+  public static void main(String args[]){
+	  Scanner sc= new Scanner(System.in);
+      int useCase=sc.nextInt();
+    for(int j=0;j<useCase;j++) {
+      int length=sc.nextInt();
+    	  String structure=new String();
+    	  structure=sc.next();;
+    	  char[] charStructure=structure.toCharArray();
+    	  int pos=0;
+    	  int ans=0;
+    	  int i=0;   
+    	  while(i<length) {
+    		  if(charStructure[i]=='.') {
+    			  i=i+3;
+    			  ans++;
+    		}
+    		  else 
+    		  {
+    			  i++;
+    		  }
+    	  }
+    	  System.out.println(ans);
+  	}
+  }
+}
