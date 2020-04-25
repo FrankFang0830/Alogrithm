@@ -1,0 +1,54 @@
+/****
+牛客网地址：https://www.nowcoder.com/practice/fc72d3493d7e4be883e931d507352a4a?tpId=98&tqId=32827&rp=1&ru=/ta/2019test&qru=/ta/2019test/question-ranking
+题目要求：每个输入包含一个测试用例。
+每个测试用例的第一行包含一个正整数，表示转方向的次数N(N<=1000)。
+接下来的一行包含一个长度为N的字符串，由L和R组成，L表示向左转，R表示向右转。
+输出牛牛最后面向的方向，N表示北，S表示南，E表示东，W表示西。
+输入：3
+LRR
+输出：E
+*****/
+///
+本道题目，相对简单，只需判断最后的右转次数和左转次数的差值与4做商的余数就可以知道实际上转了几次。得出对应方向。
+需要注意的是，如果结果为负不可用绝对值，需要重新考虑+4n。
+///
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+public class Main {
+  public static void main(String args[]){
+	  Scanner sc= new Scanner(System.in);
+      int num=0;
+      num=sc.nextInt();
+      String dir= sc.next();
+      char[] charDir=dir.toCharArray();
+      int numL=0;
+      int numR=0;
+      for(int i=0;i<num;i++) {
+    	  	 if(charDir[i]=='L') {
+    	  		 numL++;
+    	  	 }
+    	  	 else if(charDir[i]=='R') {
+    	  		 numR++;
+    	  	 }
+      }
+      
+      int r=numR-numL;
+      if(r>0) {
+    	     if(r%4==0) {System.out.println("N");}
+    	     else if(r%4==1) {System.out.println("E");}
+    	     else if(r%4==2) {System.out.println("S");}
+    	     else if(r%4==3) {System.out.println("W");}
+      }
+      	else{
+    	     int r1=numL-numR;
+    	     if(r1%4==0) {System.out.println("N");}
+    	     else if(r1%4==1) {System.out.println("W");}
+    	     else if(r1%4==2) {System.out.println("S");}
+    	     else if(r1%4==3) {System.out.println("E");}
+      }
+  }
+}
