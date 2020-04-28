@@ -1,0 +1,49 @@
+//注意char为数字时，想要单独获取char中的这个数字，不能直接获取，不能直接类型转换，需要借助char'0'.否则结果为Ascii
+//当int数组不知道长度时，可以用arraylist
+/*****
+牛客网地址：https://www.nowcoder.com/practice/0425aa0df74646209d3f56f627298ab2?tpId=98&tqId=32845&tPage=2&rp=1&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+*****/
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+   public static void main(String args[]) {
+	   String ss="";
+	   Scanner sc= new Scanner(System.in);
+	   int num=sc.nextInt();
+	   String[] str=new String[num];
+	   int[] finalResult=new int[num];
+	   for(int i=0;i<num;i++) {
+		    str[i]=sc.next();
+	   }
+	   for(int i=0;i<num;i++) {
+		    char[] charstr=new char[str[i].length()];
+		    charstr=str[i].toCharArray();
+		   
+		    ArrayList result = new ArrayList();
+		   
+		    int j=0;
+		    for(j=0;j<str[i].length();j++) {
+		    		if(!Character.isAlphabetic(charstr[j])) {//获取一个string中所有的数字
+		    			result.add((int)charstr[j]-(int)('0'));
+		    		}
+			  
+		   }
+		   ss="";
+		   //由于题目要求，后六位一定是数字，所以String lasts = str[i].substring(str[i].length() - 6, str[i].length());
+		   //可以一步到位
+		   for(int l=result.size()-6;l<result.size();l++) {//获取后六位
+	            ss=ss+result.get(l);
+	        }
+		   finalResult[i]=Integer.parseInt(ss);
+		   }
+	   	   Arrays.sort(finalResult);
+		   for(int f=0;f<num;f++) {
+			   System.out.println(finalResult[f]);
+		   }		
+	   }
+	 
+	   
+   }
+
