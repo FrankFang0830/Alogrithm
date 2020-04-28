@@ -1,0 +1,47 @@
+/****
+牛客网地址：https://www.nowcoder.com/practice/0425aa0df74646209d3f56f627298ab2?tpId=98&tqId=32845&tPage=2&rp=1&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+升级版本输入：4
+abc123455
+boyxx213456
+cba312456
+cdwxa654321
+输出：123455
+123456
+123456
+123456
+*****/
+import java.util.Scanner;
+import java.util.Arrays;
+public class Main {
+   public static void main(String args[]) {
+	   String ss="";
+	   Scanner sc= new Scanner(System.in);
+	   int num=sc.nextInt();
+	   String[] str=new String[num];
+	   for(int i=0;i<num;i++) {
+		    str[i]=sc.next();
+	   }
+	   for(int i=0;i<num;i++) {
+		    char[] charstr=new char[str[i].length()];
+		    charstr=str[i].toCharArray();
+		   
+		    int[] result =new int[6];
+		    int k=0;
+		   for(int j=str[i].length()-1;j>str[i].length()-7;j--) {
+			  
+			  result[k]=(int)charstr[j]-(int)('0') ;
+			  k++;
+		   }
+		   Arrays.sort(result); 
+		   ss="";
+		   for(int m=0;m<6;m++) {
+		   ss=ss+result[m];
+		   }
+		   System.out.println(ss);
+		   }
+	   		
+	   }
+	 
+	   
+   }
+
