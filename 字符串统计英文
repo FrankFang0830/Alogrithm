@@ -1,0 +1,42 @@
+/****
+牛客网地址：https://www.nowcoder.com/practice/6d5e036defdf408681376a4a9d4930ff?tpId=98&tqId=32844&tPage=2&rp=1&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+题目描述：通过键盘输入一串小写字母(a~z)组成的字符串。
+请编写一个字符串归一化程序，统计字符串中相同字符出现的次数，并按字典序输出字符及其出现次数。
+例如字符串"babcc"归一化后为"a1b2c2"
+输入
+dabcab
+输出
+a2b2c1d1
+****/
+//如果判断用26个字母，会存在26个判断if条件。
+我们用ASCII码表，97代表小写字母a，利用char型强制转换。可以节省代码量。
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+   public static void main(String args[]) {
+	   Scanner sc=new Scanner(System.in);
+	   String input=sc.nextLine();
+	   char[] chr=input.toCharArray();
+	   int[] num=new int[26];
+	   ArrayList result=new ArrayList();
+	   for(int i=0;i<input.length();i++) {
+		   for(int j=0;j<26;j++) {
+			   if(chr[i]==(char)(97+j)) 
+			   {
+				   num[j]=num[j]+1;
+				
+			   }
+		   }
+	   }
+	   String ss="";
+	   for(int j=0;j<26;j++) {
+		   if(num[j]!=0) {
+			   ss=ss+(char)(97+j)+""+num[j];
+			   }
+	   }
+	   System.out.println(ss);
+   }
+ }
+//
