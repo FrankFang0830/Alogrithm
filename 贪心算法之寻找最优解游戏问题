@@ -1,0 +1,49 @@
+/****牛客网地址：https://www.nowcoder.com/practice/17a083854661490e85e5bb6c4b26e546?tpId=98&tqId=32966&tPage=8&rp=8&ru=/ta/2019test&qru=/ta/2019test/question-ranking
+问题描述：你在玩一个回合制角色扮演的游戏。现在你在准备一个策略，以便在最短的回合内击败敌方角色。在战斗开始时，敌人拥有HP格血量。当血量小于等于0时，敌人死去。一个缺乏经验的玩家可能简单地尝试每个回合都攻击。但是你知道辅助技能的重要性。
+在你的每个回合开始时你可以选择以下两个动作之一：聚力或者攻击。
+    聚力会提高你下个回合攻击的伤害。
+    攻击会对敌人造成一定量的伤害。如果你上个回合使用了聚力，那这次攻击会对敌人造成buffedAttack点伤害。否则，会造成normalAttack点伤害。
+给出血量HP和不同攻击的伤害，buffedAttack和normalAttack，返回你能杀死敌人的最小回合数。
+输入描述:
+第一行是一个数字HP
+第二行是一个数字normalAttack
+第三行是一个数字buffedAttack
+1 <= HP,buffedAttack,normalAttack <= 10^9
+输入：13
+3
+5
+输出：5
+*****/
+//解题思路：贪心算法应用
+//加成攻击时间周期为2，普通攻击时间周期为1。所以如果2na>=ba,则优先最多次使用普通攻击。
+//反之，如果2na<ba,则优先使用两次为一组优先使用ba。
+//在第二种情况下如果剩下来的余数<=na，则直接+1.
+//na不够，直接+2.不用考虑细节，直接加两天。因为要么是2天的na,要么就是一次的ba。最坏情况也是一次ba可以满足。余数不可能会超过一个ba。
+	   	   
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class Main {
+   public static void main(String args[]) {
+	   Scanner sc=new Scanner(System.in);
+	   int hp=sc.nextInt();
+	   int na=sc.nextInt();
+	   int ba=sc.nextInt();
+	   int days=0;
+	   if((2*na)>ba) {//优先使用na攻击
+		   days=hp/na;
+		   if(hp%na!=0) days++;
+	   }
+	   else {
+		     days=hp/ba;
+	   	   days=days*2;
+	   	   if(hp%na!=0) {
+	   		   if((hp%na)<=na)days=days+1;
+	   		   else days=days+2;}
+	   	 }
+	   System.out.println(days);
+   }
+ }
+
