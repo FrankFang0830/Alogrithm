@@ -1,0 +1,60 @@
+/****
+牛客网地址：https://www.nowcoder.com/practice/003482c395bd41c68082f6adc545a600?tpId=98&tqId=32852&tPage=2&rp=1&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+题目描述：给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。
+("回文串”是一个正读和反读都一样的字符串，比如“level”或者“noon”等等就是回文串。)
+具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被计为是不同的子串。
+输入：输入一个字符串S 例如“aabcb”(1 <= |S| <= 50), |S|表示字符串S的长度。
+输出：符合条件的字符串有"a","a","aa","b","c","b","bcb"
+所以答案:7
+****/
+//考虑多种情况1:直接单个字母，直接输出。
+            2:三个字母，首尾相同，直接输出
+            3:多个字母，首尾相同，依次顺位递增，递减。直到，出现三个字母的情况为止，都是相同的，则输出。
+            4:两个字母，aa，首位相同直接输出。
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+public class Main {
+   public static void main(String args[]) {
+	   Scanner sc=new Scanner(System.in);
+	   String input=sc.nextLine();
+	   char[] charstr=new char[input.length()];
+	   charstr=input.toCharArray();
+	   
+	   ArrayList arr=new ArrayList();
+	   String sub="";
+	   for(int m=0;m<input.length();m++) {
+		   for(int n=input.length()-1;n>=m;n--) {
+			   //加入这个if的判断是，我们必须保证dassad这种选中，而不是dascd。不能光看首尾是否相等，还要确保两边同时顺移的每一位都相等。
+			   if(charstr[m]==charstr[n]) {
+				   //提取子串
+				   sub=input.substring(m, n+1);
+				   //m,n负责的是整体字符串的循环，如果此时对mn进行操作，则会影响整个后续的遍历，所以设置临时变量p,q
+				   int p=m;	
+				   int q=n;
+				   //最简单的情况，单个字母，直接加入
+				   if(p==q) arr.add(sub);
+				   //对多个字符的复杂情况进行处理，如果首尾相等，那么同时顺移一位，再次进行比较
+				   while(p!=q) {
+					  if(charstr[p]==charstr[q]) {
+						   p++;
+						   q--;
+							 //这种情况为aa的两字母情况。只要满足，直接放入
+							   if(p==q+1) {
+								   arr.add(sub);
+								   break;
+							   }
+							   //这种情况为三字母“夹一”情况，无论中间是谁，只要首位相同直接保存。
+							   else if(p==q) {arr.add(sub);
+							   break;}
+						 }
+					   else break;//不满足，直接踢出循环，不进行任何操作。
+					}
+				}
+		    }
+	    }
+	   int count=arr.size();
+	   System.out.println(count);
+   }
+ }
+
