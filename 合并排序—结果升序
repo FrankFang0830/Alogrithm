@@ -1,0 +1,67 @@
+/*****牛客网地址：https://www.nowcoder.com/practice/20c8731629b64109825595c3d349d2fc?tpId=98&tqId=32849&tPage=2&rp=8&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+题目描述：请实现一个函数，功能为合并两个升序数组为一个升序数组（！！不允许使用原生的 sort、concat 等函数）
+输入：1,5,7,9
+2,3,4,6,8,10
+输出：1,2,3,4,5,6,7,8,9,10
+基本思路：https://www.nowcoder.com/questionTerminal/20c8731629b64109825595c3d349d2fc?answerType=1&f=discussion
+假设有1，2，3，4
+      5，6，7
+ 那么我们设立两个指针，先比较1，5，1小于5所以将1添加到结果集中，将第一组的指针后移。继续拿2和5比。。。。
+两行字符串，先将其转换为整形数组。
+然后进行归并排序。如果有一个指针结束，代表着，一个整形数组遍历完成，那么只需要将剩下的原封不动放入结果集中即可。这样的理由是：题目要求输入数组升序排序。
+
+*****/
+import java.util.Scanner;
+public class Main {
+   public static void main(String args[]) {
+	  Scanner sc=new Scanner(System.in);
+	  String s1=sc.nextLine();
+	  if(!sc.hasNextLine()) {
+		  System.out.print(s1);
+		  return;
+	  }
+	  String s2=sc.nextLine();
+	  String[] a1 = s1.split(",");
+	  String[] b1 = s2.split(",");
+	  int[] a=new int[a1.length];
+	  int[] b=new int[b1.length];
+	  int m=0,n=0;//指针
+	  int[] ans=new int[a1.length+b1.length];
+	  int k=0;
+	  //转换为int型数组
+	  for(int i=0;i<a1.length;i++) {
+		  a[i]=Integer.parseInt((a1[i]));
+		  //System.out.println(a[i]);
+	  }
+	  for(int i=0;i<b1.length;i++) {
+		  b[i]=Integer.parseInt((b1[i]));
+		 // System.out.println(b[i]);
+	  }
+		 while(m!=a1.length && n!=b1.length) {
+			 if(a[m]>=b[n]) {
+			   ans[k]=b[n];
+			   n++;
+			   k++;
+			 }
+			 else {
+				 ans[k]=a[m];
+				 m++;
+				 k++;
+			 }
+		}
+		if(m==a1.length) {
+			for(int temp=n;temp<b1.length;temp++) 
+				ans[temp+m]=b[temp];
+			}
+		if(n==b1.length) {
+			for(int temp=m;temp<a1.length;temp++)
+				ans[temp+n]=a[temp];
+			}
+		
+	   String result="";
+	   for(int z=0;z<ans.length-1;z++) 
+		   result=result+ans[z]+",";   
+	   System.out.println(result+ans[ans.length-1]);
+   }
+ }
+
