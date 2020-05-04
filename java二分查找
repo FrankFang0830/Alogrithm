@@ -1,4 +1,9 @@
 二分查找图解：https://baijiahao.baidu.com/s?id=1647644071864997557&wfr=spider&for=pc
+二分查找必要条件？
+必须为顺序存储结构；
+必须按关键字大小有序排列。
+将有序数组分为三个部分，分别为中间值前（中间值数之前的一组数据），中间值和中间值后（中间值之后的一组数据）；
+将要查找的数与中间值的数相比较，等于则退出查找，小于则在中间值前进行比较，大于在在中间值后进行比较，依次递归，直至查找到对应的值为止；
 public class test{
 	//二分查找
 	public static boolean BinarySearch(int target, int []array) {
