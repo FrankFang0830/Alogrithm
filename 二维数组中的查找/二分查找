@@ -1,0 +1,47 @@
+牛客网地址：https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&tqId=11154&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking
+基本思想：先利用每行最右值与target比较，这样可以省时间，道理请看另一篇区域法代码
+然后针对符合条件的最右值，运用二分法查找。虽然代码量大，但比暴力法时间复杂度小。
+二分查找算法，见Alogrithm/java二分查找
+/******
+对于一个二维数组的判断为空处理：由三部分进行。1:array==null 2.array.length==0 3.arrary[0].length()=0
+*******/
+public class test{
+	//从右上角开始查找，如果小于第一行右上角则在第一行里查找，如果大于则看第二行的元素
+	public static boolean Find(int target, int [][] array) {
+		if(array==null||array[0].length==0||array.length==0)return false;
+		int columns=array[0].length-1;//数组长度一致
+		int rows=array.length;
+		int i=0;
+		while(i<rows) {
+			if(array[i][columns]<target) i++;
+			else if(array[i][columns]==target) return true;
+			else {
+			   if(  BinarySearch(target,array[i])==true) return true ;
+			   else i++;
+				
+			}
+		}
+		return false;
+		
+    	}
+	
+	public static boolean BinarySearch(int target, int []array) {
+		int low=0,high=array.length-1,mid=0;
+		//特殊值情况
+		if(low>high) return false;
+		while(low<=high) {
+			mid=(low+high)/2;
+			if(target==array[mid]) return true;
+			else if(target>array[mid]) {
+				low=mid+1;
+			}
+			else high=mid-1;
+		}
+		return false;
+		}
+	
+    public static void main(String args[]) {
+       int test[][]= new int[][]{{1,2,3},{4,5,6},{7,10,12},{8,11,13}};
+       System.out.println(Find(9,test));
+    }
+}
