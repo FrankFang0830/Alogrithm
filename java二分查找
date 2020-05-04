@@ -1,3 +1,4 @@
+二分查找图解：https://baijiahao.baidu.com/s?id=1647644071864997557&wfr=spider&for=pc
 public class test{
 	//二分查找
 	public static boolean BinarySearch(int target, int []array) {
