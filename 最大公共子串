@@ -1,0 +1,38 @@
+/****
+牛客网地址：https://www.nowcoder.com/practice/e947e4801fc64808b2390c1cf2754906?tpId=98&tqId=32993&tPage=9&rp=8&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+题目描述：给定两个字符串，请编写代码，输出最长公共子串（Longest Common Substring），是指两个字符串中的最长的公共子串，要求子串一定是连续。
+输入描述:文本格式，2个非空字符串（字母数字组成），2个字符串以","英文逗号分割，字符串长度均小于等于100。
+输入：bab,caba
+输出：2
+解题思路：设置双指针，从最大长度开始循环，逐一缩减至单位字符。如果大于最大长度则更新。
+因为最大字符子串是连续的，所以直接用contains方法。
+****/
+import java.util.Scanner;
+public class Main {
+   public static void main(String args[]) {
+	 Scanner sc= new Scanner(System.in);
+	 String s=sc.nextLine();
+	 String[] ss=s.split(",");
+	 int max=findLCS(ss);
+	 System.out.println(max);
+   }
+   public static int findLCS (String[] s) {
+	   int max=0;
+	   int temp=0;
+	   String sub="";
+	   //仅限两个字符串查找公共子串
+	   if(s.length>2) return 0;
+	   
+	   for(int i=0;i<s[0].length();i++) {
+		   for(int j=s[0].length();j>i;j--) {
+			   sub=s[0].substring(i, j);
+			   if(s[1].contains(sub)) {
+				   temp=j-i;
+				   if(temp>max) max=temp;
+			   }
+		   }
+	   }
+	   return max;
+   } 
+ }
+
