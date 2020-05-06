@@ -1,0 +1,48 @@
+/动态规划：完全背包问题/
+完全背包问题讲解网址：图解：https://blog.csdn.net/qq_37767455/article/details/99086678
+                  原理：https://blog.csdn.net/sinat_34022298/article/details/77653693
+在这两篇文章中，都对背包问题做了很好的讲解。但是我在这里想解释一下最核心的状态转移方程（其实就是一个最大值算法）
+背包问题中，就是用有限的空间，拿到最高的利润。所以我们需要比较放入这件物品之前，和放入这件物品之后利润是否增加。
+如果增加就放入，如果减少就不放入。
+      0  1  2  3  4  5
+3/5   0  0  0  5  5  5
+2/10  0  0  10 10 10 15
+2/20  0  0  20  20 30 30
+f[i-1][v]：代表不放入第i件物品，所以也不会占用空间资源v，v不变
+f[i-1][v-weigt[i]]+value[i]:代表放入第i件物品，也占用了空间资源v后的结果
+表格中第0行第0列为已经初始化好的0数组，然后每一个值在此基础上根据状态转移方程计算。
+public class CompleteBackpack {
+	private static final int N = 3;
+	private static final int V = 5;
+	private int weight[] = {0,3,2,2};
+	private int Value[] = {0,5,10,20};	 
+	private int f[][]=new int[N+1][V+1];
+	
+	public int Completeknapsack()
+	{
+		//边界条件，第0行和第0列的值设为0
+		for (int i = 0;i <= N;i++){
+			f[i][0] = 0;
+		}
+		for (int v = 0;v <= V;v++){
+			f[0][v] = 0;
+		}
+		//递推
+		for (int i = 1;i <= N;i++){
+			for (int v = 1;v <= V;v++){
+				   if(v>=weight[i]) {
+				    f[i][v] = Math.max(f[i-1][v],f[i - 1][v -weight[i]] + Value[i]);
+				   }
+				   else
+					  f[i][v] =f[i-1][v];
+				
+			}
+		}
+		return f[N][V];
+	}
+	public static void main(String[] args) {
+		System.out.println(new CompleteBackpack().Completeknapsack());
+ 
+	}
+ 
+} 
