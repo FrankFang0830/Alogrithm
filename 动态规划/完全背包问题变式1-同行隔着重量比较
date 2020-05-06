@@ -1,0 +1,26 @@
+与经典完全背包问题的差异是：与上一行的相同值和同一行w个列之前的值相比较。w为重量。
+题目：https://www.nowcoder.com/questionTerminal/37aa8a88a72e47f798a14d63bee61d8f?f=discussion
+有重量分别为3，5，7公斤的三种货物，和一个载重量为X公斤的箱子（不考虑体积等其它因素，只计算重量）
+需要向箱子内装满X公斤的货物，要求使用的货物个数尽可能少（三种货物数量无限）
+假设x为8时，我在第三第六个单位，可以分别装一个3和两个3。
+怎么判断在第六个单位装不装，要看我三个单位之前的重量加上现在的重量是不是大于上一行同一列的重量。
+
+import java.util.*;
+public class Main{
+    private static Scanner sc;
+    public static void main(String[] args){
+        sc = new Scanner(System.in);
+        int X = Integer.parseInt(sc.nextLine());
+        int[][] dp = new int[4][X+1];
+        for(int i=0;i<X+1;i++) dp[0][i]=0;
+        for(int j=0;j<4;j++)   dp[j][0]=0;
+        int[] goods = new int[]{3,5,7};
+        	for(int n=1;n<4;n++) {
+            	for(int m = 1;m<=X;m++){
+            	     if(goods[n-1]>m) dp[n][m]=dp[n-1][m];
+            	     else dp[n][m]=Math.max(dp[n-1][m],dp[n][m-goods[n-1]]+goods[n-1]);
+            	    }
+          }
+        System.out.println(dp[3][X]);
+    }
+}
