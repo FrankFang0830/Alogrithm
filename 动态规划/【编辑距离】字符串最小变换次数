@@ -1,0 +1,60 @@
+牛客网原题地址：https://www.nowcoder.com/practice/2561ad26e8804cf8801926f03708ef03?tpId=98&tqId=32983&tPage=8&rp=8&ru=/ta/2019test&qru=/ta/2019test/question-ranking
+题目描述：给定两个字符串，已知可以使用三种方式进行变换
+1. 插入一个字符
+2. 删除一个字符
+3. 更改一个字符
+请设计一个算法，找到两个字符串之间的经历几次最小变换，可以字符串1转换成字符串2
+输入：ros
+     horse
+输出：3
+为什么是动态规划：
+https://leetcode-cn.com/problems/edit-distance/solution/zi-di-xiang-shang-he-zi-ding-xiang-xia-by-powcai-3/
+https://leetcode-cn.com/problems/edit-distance/solution/edit-distance-by-ikaruga/
+
+还是特殊的第一行和第一列：按照1，2，3、、、N这样排列填入。很简单的道理，如果一个空串儿，想要变成长度为五的字符串，那就需要进行五次操作。
+
+操作1：增加 d[i][j]=d[i][j-1]+1;
+举例1：d[2][3]，此时将ho变成ros，ro->ros,需要在此前一列（同行）的操作数基础上增加一次。
+
+操作2：减少 d[i][j]=d[i-1][j]+1;
+举例2：d[3][2],此时hor变成ro，hor->ho,需要在此前一行（同列）的操作数基础上增加一次.
+
+操作3：替换 d[i][j]=d[i-1][j-1]+1;
+举例3：位数保持不变，操作数增加一次。
+
+操作4: 如果两个字符串中某一个位置字母相同，则操作数不变。
+举例4: d[i][j]=d[i-1][j-1]；
+
+
+import java.util.*;
+public class Main{
+    private static Scanner sc;
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        String s1=sc.nextLine();
+        String s2=sc.nextLine();
+        if(s2=="")  System.out.println(s1.length());
+        System.out.println(minStepsConvert(s1,s2));
+    }
+    
+    public static int minStepsConvert(String word1, String word2) {
+    	    int n1= word1.length();
+    	    int n2= word2.length();
+    	    int[][] dp =new int[n2+1][n1+1];
+    	    for(int i=0;i<=n1;i++) dp[0][i]=i;
+    	    for(int j=0;j<=n2;j++) dp[j][0]=j;
+    	    
+    	    for(int i=1;i<=n2;i++) {
+    	    		for(int j=1;j<=n1;j++) {
+    	    			char a=word1.charAt(j-1);
+    	    			char b=word2.charAt(i-1);
+    	    			if(a==b) dp[i][j]=dp[i-1][j-1];//如果同一个位置两个字符一致，则说明不需要操作
+    	    			else {
+    	    				dp[i][j]=Math.min(Math.min(dp[i-1][j-1], dp[i-1][j]), dp[i][j-1])+1;
+    	    			}
+    	    		}
+    	    	
+    	    }
+    	    return dp[n2][n1];
+    }
+}
