@@ -1,0 +1,21 @@
+//递归思想要求简介：https://blog.csdn.net/qq_41485414/article/details/82959969
+递归要求：一定要有一个终止递归操作的标志，否则就会一直递归下去，导致报错。
+判断条件很重要！
+怎么写一个完整的递归呢？它包含两部分，第一是递归头，第二是递归体
+
+1.递归头就是什么时候不调自己的方法，如果没有就和之前的一样，陷入一个死循环
+
+2.递归体就是什么时候调用自己的方法，如果没有就将毫无意义！
+
+public class Practice1 {
+	 public static void main(String[] args) {
+	    System.out.println(recur_Mulitiply(5));
+	 }
+	  
+	 
+	 public static int recur_Mulitiply(int num1) {
+		 if (num1==1) return 1;
+		 else
+		 return num1*recur_Mulitiply(num1-1); //8*recur_Mulitiply(7)=>8*7*recur_Mulitiply(6)>>>>8*7*6*...2*1
+	 }
+  }
