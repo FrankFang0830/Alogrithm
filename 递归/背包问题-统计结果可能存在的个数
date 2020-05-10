@@ -1,0 +1,60 @@
+牛客网地址：https://www.nowcoder.com/practice/bf877f837467488692be703735db84e6?tpId=98&tqId=32831&tPage=1&rp=8&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+牛牛准备参加学校组织的春游, 出发前牛牛准备往背包里装入一些零食, 牛牛的背包容量为w。
+牛牛家里一共有n袋零食, 第i袋零食体积为v[i]。
+牛牛想知道在总体积不超过背包容量的情况下,他一共有多少种零食放法(总体积为0也算一种放法)。
+输入描述:
+输入包括两行
+第一行为两个正整数n和w(1 <= n <= 30, 1 <= w <= 2 * 10^9),表示零食的数量和背包的容量。
+第二行n个正整数v[i](0 <= v[i] <= 10^9),表示每袋零食的体积。
+输出描述:
+输出一个正整数, 表示牛牛一共有多少种零食放法。
+输入：
+3 10
+1 2 4
+输出
+8
+解题思路：
+因为只是统计放入的方案个数，不要求具体放入的结果。为了减少运行时间，采用递归。只要满足要求就➕1.
+如果放进去以后，背包没满则放入。一直到最后一袋零食被遍历结束为止。
+如果所有的零食体积之和都小于背包体积，那直接就是2的n次方，没包都有放和不放两种选择。
+与动态规划状态转移方程类似：
+1.放入：	put(vol,index+1,capacity,sum+vol[index]);//放入，背包占用面积增加，指针后移
+2.不放入 put(vol,index+1,capacity,sum);//放入，背包占用面积增加，指针后移
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Scanner;
+//递归
+public class Main{
+    static long result=0;
+    public static void main(String[] args){
+        Scanner sc= new Scanner(System.in);
+        int num= sc.nextInt();
+        long capacity=sc.nextInt();
+        long[] vol= new long[num];
+        long sum =0 ;
+        for (int i=0;i<num ;i++) {
+        		vol[i]=sc.nextInt();
+        		sum=sum+vol[i];
+        }
+        if(sum<capacity) {
+        	    result= (int) Math.pow(2, num);
+        }
+        else {
+        	    put(vol,0,capacity,0);
+        		}
+        System.out.println(result);
+        }
+    
+    public static void put(long[] vol,int index, long capacity, long sum) {
+    		if (index == vol.length)    //放满为止
+            return;
+    		if(sum+vol[index]<=capacity) {
+    			result++;     
+    			put(vol,index+1,capacity,sum+vol[index]);//放入
+    			
+    		}
+    		put(vol,index+1,capacity,sum);//不放入
+    }
+    
+}
