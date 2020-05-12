@@ -1,0 +1,56 @@
+牛客网地址：https://www.nowcoder.com/practice/480caa5ffd164ac8b71caaa6d0f4e6db?tpId=98&tqId=32856&tPage=2&rp=8&ru=%2Fta%2F2019test&qru=%2Fta%2F2019test%2Fquestion-ranking
+题目描述
+已知一个字符串数组words，要求寻找其中两个没有重复字符的字符串，使得这两个字符串的长度乘积最大，输出这个最大的乘积。如：
+words=["abcd","wxyh","defgh"], 其中不包含重复字符的两个字符串是"abcd"和"wxyh"，则输出16
+words=["a","aa","aaa","aaaa"], 找不到满足要求的两个字符串，则输出0
+输入描述:
+Input:["a","ab","abc","cd","bcd","abcd"]
+输出描述:
+Output:4
+备注:
+Input中，不包含相同字符的有三对：
+"ab"和"cd"
+"a"和"cd"
+"a"和"bcd"
+所以字符串长度乘积的最大值是4
+暴力法循环，两两比较，假设字符串数组长度为5.
+宏观来看：
+以第一个字符串为起点，和剩下2,3,4,5个字符串比较比较。
+  >>>>>>>>
+第三个字符串和第四，五比较。
+微观来看（具体方法）：
+两两字符串比较，只要将第一个字符串中的字符逐个取出。 substring（i,i+1）和toChararray[i]。再利用第二个字符串的contains方法判断是否有存在。
+
+
+import java.util.Scanner;
+
+public class Main{
+
+    public static void main(String[] args){
+       Scanner sc= new Scanner(System.in);
+       String input= sc.nextLine();
+       input=input.substring(1,input.length()-1);//去掉[ 和 ]括号
+       input = input.replace("\"",""); //将"符号替换成空，也就是去除"。  /"为转义字符
+       String[] s= input.split(",");
+       int max=0;
+       for(int i=0;i<s.length-1;i++) {   
+	    	   	for (int j = i+1; j <s.length; j++) {
+	    	   		if(noContain(s[i], s[j])){
+	    	   			max=Math.max(max, s[i].length()*s[j].length());
+	    	   		}
+	    	   	}
+       }
+       	System.out.println(max);
+     }
+    public static boolean noContain(String s1, String s2) {
+    	String ss="";
+    for(int i=0;i<s1.length();i++) {
+    		ss=s1.substring(i, i+1);
+    		if(s2.contains(ss)){
+    		  return false;
+    		  }
+    		}
+    return true;
+    }
+    
+}
