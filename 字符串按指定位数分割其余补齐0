@@ -1,0 +1,54 @@
+牛客网地址：https://www.nowcoder.com/practice/d9162298cb5a437aad722fccccaae8a7?tpId=37&tqId=21227&rp=0&ru=%2Fta%2Fhuawei&qru=%2Fta%2Fhuawei%2Fquestion-ranking&tPage=1
+题目描述
+•连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组； 
+•长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。 
+输入描述:
+连续输入字符串(输入2次,每个字符串长度小于100)
+输出描述:
+输出到长度为8的新字符串数组
+输入：
+abc
+123456789
+输出：
+abc00000
+12345678
+90000000
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main{
+    public static void main(String[] args){
+       Scanner sc = new Scanner(System.in);
+       while(sc.hasNext()) {
+       String line1=sc.nextLine();
+       int fixedSize=8;
+       String zeros="";
+       if(line1=="")return;
+       else {
+	       if(line1.length()<=fixedSize) { 
+	    	   		for(int i=0;i<fixedSize-line1.length();i++) {
+	    	   			zeros=zeros+"0";
+	    	   		}
+	    	   		System.out.println(line1+zeros);
+	    	   	}
+			
+		   else {
+			  int remains=line1.length();
+			  int i=0;
+			   while	(remains>=fixedSize) { 
+				   System.out.println(line1.substring(i,i+fixedSize));
+				   remains=remains-fixedSize;
+				   i= i+fixedSize;
+				}
+			   if(remains<fixedSize && remains!=0) {
+				   for(int j=0;j<fixedSize-remains;j++) {
+	   	   			zeros=zeros+"0";
+	   	   			}
+	   	   		System.out.println(line1.substring(i,line1.length())+zeros);
+	   	   		}
+			  }
+		}
+       }
+    }
+}
